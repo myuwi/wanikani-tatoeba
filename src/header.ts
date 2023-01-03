@@ -16,9 +16,9 @@ const metadata = {
     "https://github.com/myuwi/wanikani-tatoeba/releases/latest/download/wanikani-tatoeba.user.js",
   supportURL: packageJson.bugs.url,
   match: [
-    "https://www.wanikani.com/lesson/session/*",
-    "https://www.wanikani.com/extra_study/session/*",
-    "https://www.wanikani.com/review/session/*",
+    "https://www.wanikani.com/lesson/session*",
+    "https://www.wanikani.com/extra_study/session*",
+    "https://www.wanikani.com/review/session*",
     "https://www.wanikani.com/vocabulary/*",
   ],
   "run-at": "document-end",

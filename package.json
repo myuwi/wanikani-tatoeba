@@ -1,6 +1,6 @@
 {
   "name": "wanikani-tatoeba",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Myuwi",
   "description": "Adds a \"More Context Sentences from Tatoeba.org\" section to WaniKani's vocabulary pages",
   "license": "ISC",
