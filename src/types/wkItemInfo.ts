@@ -1,6 +1,6 @@
 import { Simplify } from "type-fest";
 
-export type Page =
+export type PageType =
   | "lesson"
   | "lessonQuiz"
   | "review"
@@ -15,7 +15,7 @@ type Permutations<T extends string, U extends string = T> = T extends any
   ? T | `${T},${Permutations<Exclude<U, T>>}`
   : never;
 
-export type Pages = Permutations<Page>;
+export type PageTypes = Permutations<PageType>;
 export type ItemTypes = Permutations<ItemType>;
 export type Sections = Permutations<Section>;
 
@@ -25,7 +25,7 @@ export type Composition = {
 };
 
 export type Item = {
-  on: Page;
+  on: PageType;
   type: ItemType;
   under: Section;
   hiddenSpoiler: Section;
@@ -49,7 +49,7 @@ export type NotifyItem = Simplify<
 
 // TODO: https://greasyfork.org/en/scripts/430565-wanikani-item-info-injector/code
 export type WKItemInfo = {
-  on: (...pages: Pages[]) => any;
+  on: (...pages: PageTypes[]) => any;
   forType: (...types: ItemTypes[]) => any;
   under: (...tabs: Sections[]) => any;
   spoiling: (...spoilers: (Sections | "nothing")[]) => any;

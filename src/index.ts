@@ -1,21 +1,23 @@
-import { tatoeba } from "./tatoeba";
 import { Sentence, Vocab } from "./types";
 import { TatoebaResponse } from "./types/tatoeba";
-import { NotifyItem, Page } from "./types/wkItemInfo";
+import { NotifyItem, PageType } from "./types/wkItemInfo";
+import { tatoeba } from "./tatoeba";
 import { parseFurigana, sentenceContainsVocab } from "./utils";
 
-const onNotify = async (item: NotifyItem) => {
-  const parentEl = document.createElement("div");
-  parentEl.setAttribute("id", "tatoeba-context-sentences");
+// TODO: Add caching for Tatoeba data
+// TODO: Multiple translations for the same sentence
+// TODO: Group sentences with the same english translation
+// TODO: Load more
 
-  const bodyElement = document.createElement("div");
+const onNotify = async (item: NotifyItem) => {
+  const bodyElement = document.createElement("p");
+  bodyElement.classList.add("subject-section__text");
   bodyElement.innerText = "Loading sentences...";
-  parentEl.append(bodyElement);
 
   if (item.injector) {
     item.injector.appendSubsection(
       "More Context Sentences from Tatoeba.org",
-      parentEl
+      bodyElement
     );
   }
 
@@ -27,14 +29,21 @@ const onNotify = async (item: NotifyItem) => {
   try {
     const data = await tatoeba(item.characters);
     const sentences = getSentences(data, item);
-    appendSentences(parentEl, sentences, item.on);
+
+    if (!sentences.length) {
+      bodyElement.innerText =
+        "No relevant context sentences for the current vocabulary were found.";
+      return;
+    }
+
+    appendSentences(bodyElement, sentences, item.on);
   } catch (err) {
     console.error(err);
     bodyElement.innerText = "There was an error fetching sentences.";
   }
 };
 
-const getSentences = (data: TatoebaResponse, item: NotifyItem) => {
+const getSentences = (data: TatoebaResponse, item: NotifyItem): Sentence[] => {
   if (!item?.characters || !item.reading) return [];
 
   const vocab: Vocab = {
@@ -42,26 +51,32 @@ const getSentences = (data: TatoebaResponse, item: NotifyItem) => {
     readings: item.reading,
   };
 
-  const sentences = data.results.map((result) => {
+  const sentences = data.results.reduce<Sentence[]>((sentences, result) => {
     const japanese = result.text;
-    const english = result.translations.find((e) => e.length > 0)?.[0]
-      .text as string;
+    const directTranslations = result.translations[0];
+    // const indirectTranslations = result.translations[1];
+    // const translations = directTranslations;
+    const english = directTranslations[0]?.text;
 
-    const transcription = result.transcriptions?.[0]?.text;
+    if (english) {
+      const transcription = result.transcriptions[0];
 
-    // Undefined if the item doesn't contain a transcription
-    let relevant: boolean | undefined;
-    if (transcription) {
-      const parsedSentence = parseFurigana(transcription);
-      relevant = sentenceContainsVocab(parsedSentence, vocab);
+      // Undefined if the item doesn't contain a transcription
+      let relevant: boolean | undefined;
+      if (transcription) {
+        const parsedSentence = parseFurigana(transcription.text);
+        relevant = sentenceContainsVocab(parsedSentence, vocab);
+      }
+
+      sentences.push({
+        relevant,
+        english,
+        japanese,
+      });
     }
 
-    return {
-      relevant,
-      english,
-      japanese,
-    };
-  });
+    return sentences;
+  }, []);
 
   const relevantSentences = sentences.filter(
     (sentence) => sentence.relevant !== false
@@ -70,45 +85,49 @@ const getSentences = (data: TatoebaResponse, item: NotifyItem) => {
   return relevantSentences;
 };
 
+const createSentenceElement = (sentence: Sentence, pageType: PageType) => {
+  const wrapperEl = document.createElement("div");
+  if (pageType === "itemPage") {
+    wrapperEl.classList.add(
+      "subject-section__text",
+      "subject-section__text--grouped"
+    );
+  } else {
+    wrapperEl.classList.add("context-sentence-group");
+  }
+
+  const ja = document.createElement("p");
+  ja.setAttribute("lang", "ja");
+  ja.textContent = sentence.japanese;
+
+  const en = document.createElement("p");
+  en.textContent = sentence.english;
+
+  wrapperEl.append(ja, en);
+
+  return wrapperEl;
+};
+
 const appendSentences = (
   element: HTMLElement,
   sentences: Sentence[],
-  currentPage: Page
+  pageType: PageType
 ) => {
   const parentEl = document.createElement("div");
+  parentEl.style.display = "contents";
 
-  const sentenceElement = sentences.map((sentence) => {
-    const { english, japanese } = sentence;
+  const sentenceElements = sentences.map((sentence) =>
+    createSentenceElement(sentence, pageType)
+  );
 
-    const wrapperEl = document.createElement("div");
-    if (currentPage === "itemPage") {
-      wrapperEl.classList.add(
-        "subject-section__text",
-        "subject-section__text--grouped"
-      );
-    } else {
-      wrapperEl.classList.add("context-sentence-group");
-    }
-
-    const ja = document.createElement("p");
-    ja.setAttribute("lang", "ja");
-    ja.textContent = japanese;
-    const en = document.createElement("p");
-    en.textContent = english;
-
-    wrapperEl.append(ja, en);
-
-    return wrapperEl;
-  });
-
-  parentEl.append(...sentenceElement);
+  parentEl.append(...sentenceElements);
 
   if (element) {
-    element.outerHTML = parentEl.innerHTML;
+    const container = element.parentNode;
+    container?.replaceChild(parentEl, element);
   }
 };
 
-// TODO: Add caching for Tatoeba data
 unsafeWindow.wkItemInfo
   .forType("vocabulary")
   .under("examples")

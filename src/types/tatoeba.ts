@@ -36,9 +36,12 @@ export interface Result {
   correctness: number;
   script: null;
   license: string;
-  translations: Array<Translation[]>;
+  translations: [
+    Translation[], // Direct translations
+    Translation[] // Indirect translations
+  ];
   transcriptions: Transcription[];
-  audios: any[];
+  audios: Audio[];
   user: User;
   lang_name: string;
   dir: string;
@@ -75,7 +78,7 @@ export interface Translation {
   text: string;
   lang: string;
   correctness: number;
-  script: null | string;
+  script: string | null;
   transcriptions: Transcription[];
   audios: Audio[];
   isDirect?: boolean;

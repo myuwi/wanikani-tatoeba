@@ -1,6 +1,6 @@
 {
   "name": "wanikani-tatoeba",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Myuwi",
   "description": "Adds a \"More Context Sentences from Tatoeba.org\" section to WaniKani's vocabulary pages",
   "license": "ISC",
@@ -9,11 +9,11 @@
     "url": "https://github.com/myuwi/wanikani-tatoeba/issues"
   },
   "scripts": {
-    "prebuild": "pnpm type-check && pnpm test",
-    "build": "esbuild src/index.ts --bundle --target=es2017 --banner:js=\"$(pnpm --silent header)\n\" --outfile=dist/index.js",
+    "build": "esbuild src/index.ts --bundle --target=es2017 --banner:js=\"$(pnpm --silent header)\n\" --outfile=dist/wanikani-tatoeba.user.js",
     "header": "ts-node src/header.ts",
-    "test": "jest",
-    "type-check": "tsc --noEmit"
+    "test:unit": "jest",
+    "test:types": "tsc --noEmit",
+    "test": "pnpm test:types && pnpm test:unit"
   },
   "keywords": [
     "wanikani",

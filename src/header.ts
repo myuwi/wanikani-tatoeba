@@ -3,12 +3,17 @@ import packageJson from "../package.json";
 type Metadata = Record<string, string | string[]>;
 
 const metadata = {
-  name: "Wanikani Tatoeba Integration",
+  name: "WaniKani Tatoeba Integration",
+  namespace: "https://github.com/myuwi/",
   version: packageJson.version,
   description: packageJson.description,
   author: packageJson.author,
   license: packageJson.license,
   homepage: packageJson.homepage,
+  downloadURL:
+    "https://github.com/myuwi/wanikani-tatoeba/releases/latest/download/wanikani-tatoeba.user.js",
+  updateURL:
+    "https://github.com/myuwi/wanikani-tatoeba/releases/latest/download/wanikani-tatoeba.user.js",
   supportURL: packageJson.bugs.url,
   match: [
     "https://www.wanikani.com/lesson/session/*",
