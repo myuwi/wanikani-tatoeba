@@ -18,3 +18,12 @@ A userscript that integrates Tatoeba's example sentences to WaniKani's vocabular
 ## Usage
 
 WIP
+
+## TODO
+
+- [ ] Add caching for Tatoeba data
+- [ ] Multiple translations for the same sentence
+- [ ] Group sentences with the same english translation
+- [ ] Load more ("more..." link under results)
+- [ ] Script settings
+- [ ] Support vocab that have a "〜" character

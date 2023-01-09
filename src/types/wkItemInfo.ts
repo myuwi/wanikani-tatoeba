@@ -1,5 +1,10 @@
 import { Simplify } from "type-fest";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Permutations<T extends string, U extends string = T> = T extends any
+  ? T | `${T},${Permutations<Exclude<U, T>>}`
+  : never;
+
 export type PageType =
   | "lesson"
   | "lessonQuiz"
@@ -9,11 +14,6 @@ export type PageType =
 export type ItemType = "radical" | "kanji" | "vocabulary";
 export type Section = "composition" | "meaning" | "reading" | "examples";
 export type Spoils = Section | "nothing";
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Permutations<T extends string, U extends string = T> = T extends any
-  ? T | `${T},${Permutations<Exclude<U, T>>}`
-  : never;
 
 export type PageTypes = Permutations<PageType>;
 export type ItemTypes = Permutations<ItemType>;

@@ -9,8 +9,7 @@
     "url": "https://github.com/myuwi/wanikani-tatoeba/issues"
   },
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --target=es2017 --banner:js=\"$(pnpm --silent header)\n\" --outfile=dist/wanikani-tatoeba.user.js",
-    "header": "ts-node src/header.ts",
+    "build": "ts-node scripts/build.ts",
     "test:unit": "jest",
     "test:types": "tsc --noEmit",
     "test": "pnpm test:types && pnpm test:unit"
@@ -22,6 +21,7 @@
   ],
   "devDependencies": {
     "@types/jest": "^29.2.4",
+    "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
     "esbuild": "^0.16.10",
@@ -31,6 +31,7 @@
     "prettier": "2.8.1",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.2",
     "type-fest": "^3.4.0",
     "typescript": "^4.9.4"
   }

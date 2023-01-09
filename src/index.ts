@@ -4,11 +4,6 @@ import { NotifyItem, PageType } from "./types/wkItemInfo";
 import { tatoeba } from "./tatoeba";
 import { parseFurigana, sentenceContainsVocab } from "./utils";
 
-// TODO: Add caching for Tatoeba data
-// TODO: Multiple translations for the same sentence
-// TODO: Group sentences with the same english translation
-// TODO: Load more
-
 const onNotify = async (item: NotifyItem) => {
   const bodyElement = document.createElement("p");
   bodyElement.classList.add("subject-section__text");
