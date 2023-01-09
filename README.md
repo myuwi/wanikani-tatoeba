@@ -24,6 +24,6 @@ WIP
 - [ ] Add caching for Tatoeba data
 - [ ] Multiple translations for the same sentence
 - [ ] Group sentences with the same english translation
-- [ ] Load more ("more..." link under results)
-- [ ] Script settings
+- [ ] Load more ("more..." button/link under results)
+- [ ] Userscript settings
 - [ ] Support vocab that have a "〜" character
