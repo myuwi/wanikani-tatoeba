@@ -2,13 +2,14 @@
   "name": "wanikani-tatoeba",
   "version": "0.2.1",
   "author": "Myuwi",
-  "description": "Adds a \"More Context Sentences from Tatoeba.org\" section to WaniKani's vocabulary pages",
+  "description": "A userscript that adds more context sentences to WaniKani's vocabulary items using Tatoeba's collection of translated sentences.",
   "license": "ISC",
   "homepage": "https://github.com/myuwi/wanikani-tatoeba#readme",
   "bugs": {
     "url": "https://github.com/myuwi/wanikani-tatoeba/issues"
   },
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "ts-node scripts/build.ts",
     "test:unit": "jest",
     "test:types": "tsc --noEmit",

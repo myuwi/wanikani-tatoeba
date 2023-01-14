@@ -1,8 +1,11 @@
 import { Sentence, Vocab } from "./types";
 import { TatoebaResponse } from "./types/tatoeba";
 import { NotifyItem, PageType } from "./types/wkItemInfo";
+import { LRUCache } from "./cache";
 import { tatoeba } from "./tatoeba";
 import { parseFurigana, sentenceContainsVocab } from "./utils";
+
+const cache = new LRUCache<Sentence[]>(10);
 
 const onNotify = async (item: NotifyItem) => {
   const bodyElement = document.createElement("p");
@@ -11,7 +14,7 @@ const onNotify = async (item: NotifyItem) => {
 
   if (item.injector) {
     item.injector.appendSubsection(
-      "More Context Sentences from Tatoeba.org",
+      "Context Sentences from Tatoeba.org",
       bodyElement
     );
   }
@@ -22,8 +25,13 @@ const onNotify = async (item: NotifyItem) => {
   }
 
   try {
-    const data = await tatoeba(item.characters);
-    const sentences = getSentences(data, item);
+    let sentences = cache.get(item.characters);
+
+    if (!sentences) {
+      const data = await tatoeba(item.characters);
+      sentences = getSentences(data, item);
+      cache.put(item.characters, sentences);
+    }
 
     if (!sentences.length) {
       bodyElement.innerText =
