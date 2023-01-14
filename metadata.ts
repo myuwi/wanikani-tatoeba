@@ -14,12 +14,7 @@ export const metadata: Metadata = {
   updateURL:
     "https://github.com/myuwi/wanikani-tatoeba/releases/latest/download/wanikani-tatoeba.meta.js",
   supportURL: packageJson.bugs.url,
-  match: [
-    "https://www.wanikani.com/lesson/session*",
-    "https://www.wanikani.com/extra_study/session*",
-    "https://www.wanikani.com/review/session*",
-    "https://www.wanikani.com/vocabulary/*",
-  ],
+  match: "https://www.wanikani.com/*",
   "run-at": "document-end",
   require:
     "https://greasyfork.org/scripts/430565-wanikani-item-info-injector/code/WaniKani%20Item%20Info%20Injector.user.js?version=1111117",
