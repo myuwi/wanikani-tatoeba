@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@types/jest': ^29.2.4
   '@types/node': ^18.11.18
+  '@types/tampermonkey': ^4.0.8
   '@typescript-eslint/eslint-plugin': ^5.46.1
   '@typescript-eslint/parser': ^5.46.1
   esbuild: ^0.16.10
@@ -19,6 +20,7 @@ specifiers:
 devDependencies:
   '@types/jest': 29.2.4
   '@types/node': 18.11.18
+  '@types/tampermonkey': 4.0.8
   '@typescript-eslint/eslint-plugin': 5.47.0_ncmi6noazr3nzas7jxykisekym
   '@typescript-eslint/parser': 5.47.0_lzzuuodtsqwxnvqeq4g4likcqa
   esbuild: 0.16.10
@@ -1019,6 +1021,10 @@ packages:
 
   /@types/stack-utils/2.0.1:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
+    dev: true
+
+  /@types/tampermonkey/4.0.8:
+    resolution: {integrity: sha512-MeXIznLZHYlY8JBDj6/G7NkOO2slN7hntGdtZ/h6gAjckIgbi8BbSdrGEnQWU6+R5X4IeogcmZBSpKZyeaFyug==}
     dev: true
 
   /@types/yargs-parser/21.0.0:

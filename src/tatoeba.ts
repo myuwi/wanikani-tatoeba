@@ -7,8 +7,7 @@ export const tatoeba = async (word: string): Promise<TatoebaResponse> => {
     GM_xmlhttpRequest({
       method: "GET",
       url: url,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onload: (res: any) => {
+      onload: (res) => {
         const data: TatoebaResponse = JSON.parse(res.responseText);
         resolve(data);
       },
