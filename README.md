@@ -28,6 +28,8 @@ WIP
 - [ ] Load more ("more..." button/link under results)
 - [ ] Userscript settings
 - [ ] Support vocab that have a "〜" character
+- [ ] Prevent false positives? (E.g. 生物 -> 生物学)
+- [ ] Integrate sentences to the existing context sentences list
 
 [tampermonkey]: https://www.tampermonkey.net/
 [userscript]: https://github.com/myuwi/wanikani-tatoeba/releases/latest/download/wanikani-tatoeba.user.js
