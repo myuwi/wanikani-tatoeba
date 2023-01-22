@@ -1,4 +1,4 @@
-import { Parsed } from "../src/types";
+import { Parsed, Vocab } from "../src/types";
 import { parseFurigana, sentenceContainsVocab } from "../src/utils";
 
 describe("parse furigana", () => {
@@ -40,7 +40,12 @@ describe("parse furigana", () => {
 });
 
 describe("check reading", () => {
-  const tests = [
+  const tests: {
+    name: string;
+    sentence: string;
+    vocab: Vocab;
+    expect: boolean;
+  }[] = [
     {
       name: "basic kanji",
       sentence: "[羊|ひつじ]は[草|くさ]を[食|た]べる。",
