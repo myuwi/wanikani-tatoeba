@@ -8,8 +8,12 @@ export const tatoeba = async (word: string): Promise<TatoebaResponse> => {
       method: "GET",
       url: url,
       onload: (res) => {
-        const data: TatoebaResponse = JSON.parse(res.responseText);
-        resolve(data);
+        try {
+          const data: TatoebaResponse = JSON.parse(res.responseText);
+          resolve(data);
+        } catch (err) {
+          reject(err);
+        }
       },
       onabort: reject,
       onerror: reject,
