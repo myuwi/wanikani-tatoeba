@@ -1,4 +1,40 @@
-export type Metadata = Record<string, string | string[]>;
+export type Metadata = {
+  name: string;
+  namespace?: string;
+  version: string;
+  description?: string;
+  author?: string;
+  license?: string;
+  copyright?: string;
+  icon?: string;
+  iconURL?: string;
+  defaulticon?: string;
+  icon64?: string;
+  icon64URL?: string;
+  grant?: string[];
+  homepage?: string;
+  homepageURL?: string;
+  website?: string;
+  source?: string;
+  antifeature?: string[];
+  require?: string[];
+  resource?: string[];
+  include?: string[];
+  match?: string[];
+  exclude?: string[];
+  connect?: string[];
+  noframes?: boolean;
+  "run-at"?:
+    | "document-start"
+    | "document-body"
+    | "document-end"
+    | "document-idle"
+    | "context-menu";
+  updateURL?: string;
+  downloadURL?: string;
+  supportURL?: string;
+  unwrap?: boolean;
+};
 
 const formatMetadata = (metadata: Metadata) => {
   const entries = Object.entries(metadata);

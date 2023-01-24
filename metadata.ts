@@ -1,23 +1,24 @@
 import { Metadata } from "$lib/header";
-import packageJson from "./package.json";
+import pkg from "./package.json";
 
 export const metadata: Metadata = {
   name: "WaniKani Tatoeba Integration",
   namespace: "https://github.com/myuwi/",
-  version: packageJson.version,
-  description: packageJson.description,
-  author: packageJson.author,
-  license: packageJson.license,
-  homepage: packageJson.homepage,
+  version: pkg.version,
+  description: pkg.description,
+  author: pkg.author,
+  license: pkg.license,
+  homepage: pkg.homepage,
   downloadURL:
     "https://github.com/myuwi/wanikani-tatoeba/releases/latest/download/wanikani-tatoeba.user.js",
   updateURL:
     "https://github.com/myuwi/wanikani-tatoeba/releases/latest/download/wanikani-tatoeba.meta.js",
-  supportURL: packageJson.bugs.url,
-  match: "https://www.wanikani.com/*",
+  supportURL: pkg.bugs.url,
+  match: ["https://www.wanikani.com/*"],
   "run-at": "document-end",
-  require:
+  require: [
     "https://greasyfork.org/scripts/430565-wanikani-item-info-injector/code/WaniKani%20Item%20Info%20Injector.user.js?version=1111117",
-  connect: "tatoeba.org",
-  grant: "GM_xmlhttpRequest",
+  ],
+  connect: ["tatoeba.org"],
+  grant: ["GM_xmlhttpRequest"],
 };

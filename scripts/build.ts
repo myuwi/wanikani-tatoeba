@@ -1,19 +1,27 @@
-import esbuild from "esbuild";
-import { writeFile } from "fs/promises";
+import * as esbuild from "esbuild";
+import pkg from "../package.json";
+import { writeAsync } from "fs-jetpack";
 import { createHeader } from "$lib/header";
 import { metadata } from "../metadata";
+import { removeComments } from "./utils/removeComments";
 
 (async () => {
   const header = createHeader(metadata);
 
-  await esbuild.build({
+  const result = await esbuild.build({
     entryPoints: ["src/index.ts"],
     bundle: true,
-    outfile: "dist/wanikani-tatoeba.user.js",
-    banner: {
-      js: `${header}\n`,
-    },
+    write: false,
+    plugins: [removeComments],
   });
 
-  await writeFile("dist/wanikani-tatoeba.meta.js", header);
+  if (!result.outputFiles[0]) {
+    throw Error("Build didn't generate an output file.");
+  }
+
+  const code = result.outputFiles[0].text;
+  const output = `${header}\n\n${code}`;
+
+  await writeAsync(`dist/${pkg.name}.meta.js`, header);
+  await writeAsync(`dist/${pkg.name}.user.js`, output);
 })();
