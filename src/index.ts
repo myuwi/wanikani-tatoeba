@@ -1,6 +1,6 @@
 import { Sentence, Vocab } from "./types";
 import { TatoebaResponse } from "./types/tatoeba";
-import { NotifyItem, PageType } from "./types/wkItemInfo";
+import { NotifyItem } from "./types/wkItemInfo";
 import { LRUCache } from "./cache";
 import { tatoeba } from "./tatoeba";
 import { parseFurigana, sentenceContainsVocab } from "./utils";
@@ -39,7 +39,7 @@ const onNotify = async (item: NotifyItem) => {
       return;
     }
 
-    appendSentences(bodyElement, sentences, item.on);
+    appendSentences(bodyElement, sentences);
   } catch (err) {
     console.error(err);
     bodyElement.innerText = "There was an error fetching sentences.";
@@ -47,7 +47,7 @@ const onNotify = async (item: NotifyItem) => {
 };
 
 const getSentences = (data: TatoebaResponse, item: NotifyItem): Sentence[] => {
-  if (!item?.characters || !item.reading) return [];
+  if (!item.characters || !item.reading) return [];
 
   const vocab: Vocab = {
     characters: item.characters,
@@ -88,16 +88,12 @@ const getSentences = (data: TatoebaResponse, item: NotifyItem): Sentence[] => {
   return relevantSentences;
 };
 
-const createSentenceElement = (sentence: Sentence, pageType: PageType) => {
+const createSentenceElement = (sentence: Sentence) => {
   const wrapperEl = document.createElement("div");
-  if (pageType === "itemPage") {
-    wrapperEl.classList.add(
-      "subject-section__text",
-      "subject-section__text--grouped"
-    );
-  } else {
-    wrapperEl.classList.add("context-sentence-group");
-  }
+  wrapperEl.classList.add(
+    "subject-section__text",
+    "subject-section__text--grouped"
+  );
 
   const ja = document.createElement("p");
   ja.setAttribute("lang", "ja");
@@ -111,16 +107,12 @@ const createSentenceElement = (sentence: Sentence, pageType: PageType) => {
   return wrapperEl;
 };
 
-const appendSentences = (
-  element: HTMLElement,
-  sentences: Sentence[],
-  pageType: PageType
-) => {
+const appendSentences = (element: HTMLElement, sentences: Sentence[]) => {
   const parentEl = document.createElement("div");
   parentEl.style.display = "contents";
 
   const sentenceElements = sentences.map((sentence) =>
-    createSentenceElement(sentence, pageType)
+    createSentenceElement(sentence)
   );
 
   parentEl.append(...sentenceElements);
