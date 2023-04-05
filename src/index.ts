@@ -3,7 +3,7 @@ import { TatoebaResponse } from "./types/tatoeba";
 import { NotifyItem } from "./types/wkItemInfo";
 import { LRUCache } from "./cache";
 import { tatoeba } from "./tatoeba";
-import { parseFurigana, sentenceContainsVocab } from "./utils";
+import { parseFurigana, sentenceContainsVocab } from "./parser";
 
 const cache = new LRUCache<Sentence[]>(10);
 

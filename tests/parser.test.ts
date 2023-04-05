@@ -1,5 +1,5 @@
 import { Parsed, Vocab } from "../src/types";
-import { parseFurigana, sentenceContainsVocab } from "../src/utils";
+import { parseFurigana, sentenceContainsVocab } from "../src/parser";
 
 describe("parse furigana", () => {
   const tests: {
