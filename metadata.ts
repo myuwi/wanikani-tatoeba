@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   match: ["https://www.wanikani.com/*"],
   "run-at": "document-end",
   require: [
-    "https://greasyfork.org/scripts/430565-wanikani-item-info-injector/code/WaniKani%20Item%20Info%20Injector.user.js?version=1166918",
+    "https://greasyfork.org/scripts/430565-wanikani-item-info-injector/code/WaniKani%20Item%20Info%20Injector.user.js?version=1173815",
   ],
   connect: ["tatoeba.org"],
   grant: ["GM_xmlhttpRequest"],
